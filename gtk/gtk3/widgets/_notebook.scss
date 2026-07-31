@@ -1,0 +1,346 @@
+@charset "UTF-8";
+
+/*****************
+ * Notebooks and *
+ * Tabs          *
+ *****************/
+/*************
+  * Notebooks *
+  *************/
+notebook {
+	&.frame {
+		border: none;
+		padding: 0px;
+		box-shadow: inset 0px 0px 0px 1px gtk("@borders");
+	}
+
+	> header {
+		padding: 0px;
+		border: none;
+		background-color: gtk("@theme_bg_color");
+		//box-shadow: inset 0 -1px gtk("@borders");
+
+		&.top {
+			box-shadow: inset 0 -1px gtk("@borders"); // border
+			&:backdrop {
+				box-shadow: inset 0 -1px gtk("@unfocused_borders");
+			}
+		}
+		&.bottom {
+			box-shadow: inset 0 1px gtk("@borders");
+			&:backdrop {
+				box-shadow: inset 0 1px gtk("@unfocused_borders");
+			}
+		}
+		&.right {
+			box-shadow: inset 1px 0 gtk("@borders");
+			&:backdrop {
+				box-shadow: inset 1px 0 gtk("@unfocused_borders");
+			}
+		}
+		&.left {
+			box-shadow: inset -1px 0 gtk("@borders");
+			&:backdrop {
+				box-shadow: inset -1px 0 gtk("@unfocused_borders");
+			}
+		}
+		&:backdrop {
+			background-color: gtk("@theme_unfocused_bg_color");
+		}
+
+		tabs {
+			margin: 0px;
+		}
+
+		@each $_tab, $_border,
+			$_radius_first, $_radius_last in (top, bottom, 3px 0px 0px 0px, 0px 3px 0px 0px),
+			(bottom, top, 0px 0px 0px 3px, 0px 0px 3px 0px),
+			(left, right, 3px 0px 0px 0px, 0px 0px 0px 3px),
+			(right, left, 0px 3px 0px 0px, 0px 0px 3px 0px)
+		{
+			&.#{$_tab} {
+				> tabs {
+					> tab {
+						padding: 4px 6px;
+						padding-bottom: 7px;
+						border: 1px
+							solid
+							transparent;
+						border-#{$_border}: none;
+						border-#{$_tab}: 3px solid transparent;
+						background-color: gtkalpha(
+							gtk("@theme_fg_color"),
+							0.2
+						);
+						border-radius: 0;
+
+
+						&:first-child {
+							border-radius: $_radius_first;
+						}
+
+						&:last-child {
+							border-radius: $_radius_last;
+						}
+
+						&:hover,
+						&.prelight-page {
+							transition: 0.15s;
+							background-color: gtkalpha(
+								gtk("@theme_selected_bg_color"),
+								0.2
+							);
+
+						}
+
+						// Padding trickery to get selected tab overlap
+						@if $_tab == top or $_tab == bottom {
+
+							> label {
+								margin-left: -3px;
+							}
+
+							&:checked {
+								padding-left: 9px;
+
+								&:not(:first-child) {
+									margin-left: -3px;
+								}
+
+								&:first-child {
+									padding-left: 6px;
+								}
+								&:not(:last-child) {
+									margin-right: -3px;
+								}
+
+								& + tab {
+									padding-left: 9px;
+								}
+							}
+						} @else {
+
+							> label {
+								margin-top: -3px;
+							}
+
+							&:checked {
+								padding-top: 7px;
+
+								&:not(:first-child) {
+									margin-top: -3px;
+								}
+								&:first-child {
+									padding-top: 4px;
+								}
+								&:not(:last-child) {
+									margin-bottom: -3px;
+								}
+
+								& + tab {
+									padding-top: 7px;
+								}
+							}
+						}
+
+						&:checked {
+							transition: none;
+							border-color: gtk("@borders");
+							border-#{$_tab}-color: gtk("@theme_selected_bg_color");
+
+							$_radius: ();
+
+							// Combine both first and second radiuses
+							@for $i from 1 through length($_radius_first) {
+								$_radius: append($_radius, nth($_radius_first, $i) + nth($_radius_last, $i));
+							}
+
+							border-radius: $_radius;
+
+							background-color: gtk("@theme_bg_color");
+						}
+					}
+
+					arrow.down ~ tab:checked:nth-child(2) {
+						@if $_tab == top or $_tab == bottom {
+							margin-left: 0px;
+							padding-left: 6px;
+						} @else {
+							margin-top: 0px;
+							padding-top: 4px;
+						}
+					}
+
+					arrow.down ~ tab:checked:nth-last-child(2) {
+						@if $_tab == top or $_tab == bottom {
+							margin-right: 0px;
+						} @else {
+							margin-bottom: 0px;
+						}
+					}
+				}
+			}
+		}
+
+		@each $_tab, $_border,
+			$_shadow1 in (top, right, -3px 0px 0px 0px),
+			(bottom, right, -3px 0px 0px 0px),
+			(left, bottom, 0px -3px 0px 0px),
+			(right, bottom, 0px -3px 0px 0px)
+		{
+			&.#{$_tab} {
+				> tabs {
+					> tab {
+						&.reorderable-page {
+							border-width: 3px;
+							border-style: solid;
+							border-color: transparent;
+							background-color: gtk("@theme_bg_color");
+							background-clip: padding-box;
+							border-#{$_border}-width: 1px;
+							border-#{$_border}-color: gtk("@borders");
+							box-shadow: inset
+								#{$_shadow1}
+								gtk("@theme_bg_color");
+							&:hover,
+							&.prelight-page {
+								box-shadow: inset
+										0px -3px
+										0px
+										0px
+										gtkalpha(
+											gtk("@theme_selected_bg_color"),
+											0.2
+										),
+									inset $_shadow1 gtk("@theme_bg_color");
+							}
+							&:checked {
+								box-shadow: inset
+										0px -3px
+										0px
+										0px
+										gtk("@theme_selected_bg_color"),
+									inset $_shadow1 gtk("@theme_bg_color");
+								&:backdrop {
+									background-color: gtk(
+										"@theme_unfocused_bg_color"
+									);
+									border-color: transparent;
+									border-#{$_border}-color: gtk(
+										"@unfocused_borders"
+									);
+									box-shadow: none;
+								}
+							}
+							&:backdrop {
+								background-color: gtk(
+									"@theme_unfocused_bg_color"
+								);
+								border-#{$_border}-color: gtk(
+									"@unfocused_borders"
+								);
+								box-shadow: none;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.top > tabs > arrow {
+			@extend %notebook_vert_arrows;
+
+			border-top-style: none;
+		}
+
+		&.bottom > tabs > arrow {
+			@extend %notebook_vert_arrows;
+
+			border-bottom-style: none;
+		}
+
+		@at-root %notebook_vert_arrows {
+			margin-left: -5px;
+			margin-right: -5px;
+			padding-left: 4px;
+			padding-right: 4px;
+
+			&.down {
+				-gtk-icon-source: -gtk-icontheme($arrow_left);
+			}
+
+			&.up {
+				-gtk-icon-source: -gtk-icontheme($arrow_right);
+			}
+		}
+
+		&.left > tabs > arrow {
+			@extend %notebook_horz_arrows;
+
+			border-left-style: none;
+		}
+
+		&.right > tabs > arrow {
+			@extend %notebook_horz_arrows;
+
+			border-right-style: none;
+		}
+
+		@at-root %notebook_horz_arrows {
+			margin-top: -5px;
+			margin-bottom: -5px;
+			padding-top: 4px;
+			padding-bottom: 4px;
+
+			&.down {
+				-gtk-icon-source: -gtk-icontheme($arrow_up);
+			}
+
+			&.up {
+				-gtk-icon-source: -gtk-icontheme($arrow_down);
+			}
+		}
+
+		> tabs > arrow {
+			@include neobutton(toolbutton);
+
+			min-height: 16px;
+			min-width: 16px;
+			border-radius: 0;
+
+			&:hover:not(:active):not(:backdrop) {
+				background-clip: padding-box;
+				background-image: none;
+				background-color: transparentize(white, 0.7);
+				border-color: transparent;
+				box-shadow: none;
+			}
+		}
+
+		// colors the button like the label, overridden otherwise
+		button.flat {
+			padding: 0;
+			margin: 2px;
+			// FIXME: generalize .small-button?
+			min-width: 12px;
+			min-height: 12px;
+			border: 0px solid;
+			border-radius: 50%;
+			color: gtk("@borders");
+			background-image: none;
+
+			&:active,
+			&:hover{
+				color: $error_color;
+			}
+		}
+	}
+
+	> stack:not(:only-child) {
+		// the :not(:only-child) is for "hidden" notebooks
+		background-color: transparent;
+		border-style: solid;
+		border-color: gtk("@borders");
+		border-width: 0px;
+	}
+}

@@ -1,0 +1,199 @@
+@charset "UTF-8";
+
+/**************
+ * Scrollbars *
+ **************/
+
+scrollbar {
+
+	background-color: gtk("@theme_bg_color");
+	border-width: 0px;
+	border-color: gtk("@theme_bg_color");
+
+	// Vertical padding (for vertical scroll bar, obviously) is done here for proper distance to the window border,
+	// horizontal padding is done on the trough below to ensure its hit area touches the window side.
+	padding: 5px 0px;
+
+	&.vertical {
+
+		&:dir(rtl) {
+			border-right: 1px solid gtk("@borders");
+		}
+
+		&:dir(ltr) {
+			border-left: 1px solid gtk("@borders");
+		}
+
+		&.right {
+			&:dir(rtl) {
+				border-right: none;
+			}
+			border-left: 1px solid gtk("@borders");
+		}
+
+		&.left {
+			&:dir(ltr) {
+				border-left: none;
+			}
+			border-right: 1px solid gtk("@borders");
+		}
+	}
+
+	&.horizontal {
+		border-top: 1px solid gtk("@borders");
+
+		padding: 0px 5px;
+
+		&.bottom {
+			border-top: 1px solid gtk("@borders");
+		}
+
+		&.top {
+			border-top: none;
+			border-bottom: 1px solid gtk("@borders");
+		}
+	}
+
+	button {
+		min-width: 14px;
+		min-height: 14px;
+		margin: 0px;
+		padding: 0px 0px;
+		border: none;
+		border-radius: 0px;
+		background-image: none;
+		background-color: transparent;
+		color: transparent;
+		box-shadow: none;
+		&:hover {
+			border: none;
+			background-image: none;
+			background-color: gtk("@theme_bg_color");
+			color: transparent;
+		}
+		&:active,
+		&:active:hover {
+			border: none;
+			background-image: none;
+			background-color: gtk("@theme_bg_color");
+			color: transparent;
+		}
+		&:disabled {
+			border: none;
+			background-color: gtk("@theme_bg_color");
+			background-image: none;
+			color: transparent;
+		}
+	}
+
+	// Overlay Scrollbars
+	&.dragging,                                                             // if this isn't set, the scrollbars don't update their size correctly
+  &.hovering {
+		opacity: 0.991;
+	} // probably a gtk bug
+	&.overlay-indicator:not(.dragging):not(.hovering) {
+		opacity: 0.999;
+	} //
+
+	&.overlay-indicator {
+		border: none;
+
+		&.vertical {
+			border:none;
+		}
+
+		&.horizontal {
+			border:none;
+		}
+
+		background: none;
+
+		slider {
+			background-image: gtkoverlayalpha(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_foreground_normal"), 0.5*0.5*0.7), 0.75);
+		}
+	}
+
+	trough {
+		// Complements the padding on the scrollbar itself.
+		margin: 0px 5px;
+		min-width: 6px;
+		min-height: 14px;
+		background-color: transparent;
+	}
+
+	&:hover {
+		trough {
+			slider {
+				background-image: gtkoverlay(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_foreground_normal"), 0.5*0.5));
+				box-shadow: 0 0 0 1px gtkalpha(gtk("@theme_button_foreground_normal"), 0.5*0.9) inset;
+
+				&:hover {
+					background-image: gtkoverlay(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_decoration_hover"), 0.5));
+					box-shadow: 0 0 0 1px gtkalpha(gtk("@theme_button_decoration_hover"), 0.9) inset;
+				}
+			}
+		}
+	}
+
+	&.horizontal trough {
+		margin: 5px 0px;
+		min-width: 14px;
+		min-height: 6px;
+	}
+
+	*:focus ~ &,
+	& ~ *:focus {
+
+		&:hover {
+			slider {
+				background-image: gtkoverlay(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_decoration_hover"), 0.5));
+				box-shadow: 0 0 0 1px gtkalpha(gtk("@theme_button_decoration_hover"), 0.9) inset;
+			}
+		}
+
+		&.overlay-indicator {
+			slider {
+				background-image: gtkoverlayalpha(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_decoration_focus"), 0.5*0.7), 0.75);
+			}
+
+			&:hover {
+				slider {
+					background-image: gtkoverlay(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_decoration_hover"), 0.5));
+					box-shadow: 0 0 0 1px gtkalpha(gtk("@theme_button_decoration_hover"), 0.9) inset;
+				}
+			}
+		}
+	}
+
+	slider {
+		transition-duration: 0.1s;
+		min-width: 6px;
+		min-height: 30px;
+		border-radius: 15px;
+		background-clip: padding-box;
+		background-image: gtkoverlay(gtk("@theme_bg_color"), gtkalpha(gtk("@theme_button_foreground_normal"), 0.5*0.5*0.7));
+		box-shadow: 0 0 0 1px gtkalpha(gtk("@theme_button_foreground_normal"), 0.5*0.7*0.9) inset;
+	}
+
+	// GTK WebKit scrollbar paint code cannot deal with negative margins properly,
+	// causing the scrollbar slider turn invisible.
+	:not(webkitwebview) & slider {
+		margin: -9px;
+		margin-bottom: -6px;
+		margin-top: -6px;
+		// To keep the ability to drag the slider from the edge of the screen
+		border: 5px solid transparent;
+	}
+
+	&.horizontal slider {
+		transition-duration: 0.1s;
+		min-width: 30px;
+		min-height: 6px;
+	}
+
+	:not(webkitwebview) &.horizontal slider {
+		margin: -9px;
+		margin-left: -6px;
+		margin-right: -6px;
+	}
+}

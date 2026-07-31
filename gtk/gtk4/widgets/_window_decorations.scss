@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+/**********************
+ * Window Decorations *
+ *********************/
+
+dialog,
+window {
+	$shadow: rgba(0, 0, 0, 0.5);
+
+	//border: 1px solid transparent;
+	border-radius: 0 0 $window-border-radius $window-border-radius;
+	border-width: 0px;
+	box-shadow: 0px 0px 16px $shadow,
+		0px 2px 8px scale-color($shadow, $alpha: -40%);
+
+	margin: 0px;
+
+	&.csd {
+		border-radius: $window-border-radius;
+	}
+
+	&.maximized {
+		border-radius: 0;
+	}
+
+	.maximized &,
+	.fullscreen &,
+	.tiled & {
+		border-radius: 0;
+	}
+	.popup & {
+		border-radius: $r;
+		box-shadow: 0px 3px 10px -4px rgba(0, 0, 0, 0.27),
+					0px 5px 8px -4px rgba(0, 0, 0, 0.17);
+	}
+	// server-side decorations as used by mutter
+	.ssd & {
+		box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.1);
+	}
+	.csd & {
+		border-radius: $window-border-radius;
+		&.popup {
+			box-shadow: 0px 3px 10px -4px rgba(0, 0, 0, 0.27),
+						0px 5px 8px -4px rgba(0, 0, 0, 0.17);
+		}
+		&.tooltip {
+			box-shadow: none;
+		}
+		&.message-dialog {
+			box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.5);
+		}
+	}
+	.solid-csd & {
+		border-radius: 0;
+		margin: 0;
+		padding: 0px;
+		border: 5px solid gtk("@theme_titlebar_background");
+		background-color: gtk(
+			"@theme_titlebar_background_light"
+		);
+		box-shadow: none;
+	}
+}
+
+dialog.solid-csd,
+window.solid-csd {
+	headerbar.titlebar,
+	paned.titlebar,
+	.titlebar,
+	paned.titlebar headerbar {
+		border-radius: 0;
+	}
+}
+
+headerbar.titlebar {
+	min-height: 46px;
+}
+
+headerbar,
+.titlebar {
+	$titlebutton-size: 18px 18px;
+
+	windowcontrols button {
+		min-height: 18px;
+		min-width: 18px;
+		padding: 0;
+
+		$extra_margin: 14px;
+		$extra_padding: $extra_margin*2; // extend to screen border
+
+		margin-top: -$extra_margin;
+		padding-top: $extra_padding;
+		margin-bottom: -$extra_margin;
+		padding-bottom: $extra_padding;
+
+		&:dir(ltr) {
+			margin-right: -$extra_margin/2;
+			padding-right: $extra_margin;
+		}
+
+		&:dir(rtl) {
+			margin-left: -$extra_margin/2;
+			padding-left: $extra_margin;
+		}
+
+		image {
+			color: transparent;
+		}
+
+		&.close,
+		&.close:hover,
+		&.close:active,
+		&.close:backdrop,
+		&.maximize,
+		&.maximize:hover,
+		&.maximize:active,
+		&.maximize:backdrop,
+		&.minimize,
+		&.minimize:hover,
+		&.minimize:active,
+		&.minimize:backdrop {
+			border-color: transparent;
+			border-image: none;
+			box-shadow: none;
+			background-color: transparent;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: $titlebutton-size;
+		}
+
+		&.close {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-close-symbolic.svg"),
+				color gtk("@theme_text_color")
+			);
+			-gtk-icon-source: none;
+		}
+		&.close:hover {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-close-hover-symbolic.svg")
+			);
+		}
+		&.close:active {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-close-active-symbolic.svg")
+			);
+		}
+		&.close:backdrop {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-close-symbolic.svg")
+			);
+		}
+
+		&.maximize {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-maximize-symbolic.svg")
+			);
+		}
+		&.maximize:hover {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-maximize-hover-symbolic.svg")
+			);
+		}
+		&.maximize:active {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-maximize-active-symbolic.svg")
+			);
+		}
+		&.maximize:backdrop {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-maximize-symbolic.svg")
+			);
+		}
+
+		&.minimize {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-minimize-symbolic.svg")
+			);
+		}
+		&.minimize:hover {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-minimize-hover-symbolic.svg")
+			);
+		}
+		&.minimize:active {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-minimize-active-symbolic.svg")
+			);
+		}
+		&.minimize:backdrop {
+			background-image: -gtk-recolor(
+				url("../assets/breeze-minimize-symbolic.svg")
+			);
+		}
+
+		.maximized & {
+			&.maximize {
+				background-image: -gtk-recolor(
+					url("../assets/breeze-maximized-symbolic.svg")
+				);
+			}
+			&.maximize:hover {
+				background-image: -gtk-recolor(
+					url("../assets/breeze-maximized-hover-symbolic.svg")
+				);
+			}
+			&.maximize:active {
+				background-image: -gtk-recolor(
+					url("../assets/breeze-maximized-active-symbolic.svg")
+				);
+			}
+			&.maximize:backdrop {
+				background-image: -gtk-recolor(
+					url("../assets/breeze-maximized-symbolic.svg")
+				);
+			}
+		}
+	}
+}
+
+headerbar.selection-mode button.titlebutton,
+.titlebar.selection-mode button.titlebutton {
+	text-shadow: none;
+	&:backdrop {
+		-gtk-icon-shadow: none;
+	}
+}

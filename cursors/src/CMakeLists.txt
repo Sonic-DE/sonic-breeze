@@ -1,3 +1,1 @@
-if(BUILD_QT6)
-    add_subdirectory(kcursorgen)
-endif()
+add_subdirectory(kcursorgen)

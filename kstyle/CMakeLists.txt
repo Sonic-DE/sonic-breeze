@@ -58,73 +58,68 @@ kconfig_add_kcfg_files(breeze_PART_SRCS ../kdecoration/breezesettings.kcfgc)
 kconfig_add_kcfg_files(breeze_PART_SRCS breezestyleconfigdata.kcfgc)
 
 
-add_library(breeze${QT_MAJOR_VERSION} MODULE ${breeze_PART_SRCS})
+add_library(breeze6 MODULE ${breeze_PART_SRCS})
 
-ecm_qt_declare_logging_category(breeze${QT_MAJOR_VERSION}
+ecm_qt_declare_logging_category(breeze6
     HEADER
         breeze_logging.h
     IDENTIFIER
         BREEZE
     CATEGORY_NAME
-        breeze${QT_MAJOR_VERSION}
+        breeze6
     DEFAULT_SEVERITY
         Warning
 )
 
-target_link_libraries(breeze${QT_MAJOR_VERSION}
-    Qt${QT_MAJOR_VERSION}::Core
-    Qt${QT_MAJOR_VERSION}::Gui
-    Qt${QT_MAJOR_VERSION}::Widgets
+target_link_libraries(breeze6
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )
 
 if(HAVE_QTDBUS)
-    target_link_libraries(breeze${QT_MAJOR_VERSION}
-        Qt${QT_MAJOR_VERSION}::DBus
+    target_link_libraries(breeze6
+        Qt6::DBus
     )
 endif()
 
 if( BREEZE_HAVE_QTQUICK )
-    target_link_libraries(breeze${QT_MAJOR_VERSION} 
-        Qt${QT_MAJOR_VERSION}::Quick
-        KF${QT_MAJOR_VERSION}::CoreAddons
+    target_link_libraries(breeze6
+        Qt6::Quick
+        KF6::CoreAddons
     )
 endif()
 
-target_link_libraries(breeze${QT_MAJOR_VERSION}
-    KF${QT_MAJOR_VERSION}::CoreAddons
-    KF${QT_MAJOR_VERSION}::ConfigCore
-    KF${QT_MAJOR_VERSION}::ConfigGui
-    KF${QT_MAJOR_VERSION}::GuiAddons
-    KF${QT_MAJOR_VERSION}::IconThemes
-    KF${QT_MAJOR_VERSION}::WindowSystem
+target_link_libraries(breeze6
+    KF6::CoreAddons
+    KF6::ConfigCore
+    KF6::ConfigGui
+    KF6::GuiAddons
+    KF6::IconThemes
+    KF6::WindowSystem
+    KF6::ColorScheme
 )
 
-if(QT_MAJOR_VERSION STREQUAL "5")
-    target_link_libraries(breeze5 KF5::ConfigWidgets)
-else()
-    target_link_libraries(breeze6 KF6::ColorScheme)
-endif()
+target_link_libraries(breeze6 breezecommon6)
 
-target_link_libraries(breeze${QT_MAJOR_VERSION} breezecommon${QT_MAJOR_VERSION})
-
-if(KF${QT_MAJOR_VERSION}FrameworkIntegration_FOUND)
-    target_link_libraries(breeze${QT_MAJOR_VERSION}  KF${QT_MAJOR_VERSION}::Style)
+if(KF6FrameworkIntegration_FOUND)
+    target_link_libraries(breeze6 KF6::Style)
 endif()
 
 
 if (WIN32)
     # As stated in https://docs.microsoft.com/en-us/cpp/c-runtime-library/math-constants M_PI only gets defined
     # when if _USE_MATH_DEFINES is defined
-    target_compile_definitions(breeze${QT_MAJOR_VERSION}  PRIVATE _USE_MATH_DEFINES _BSD_SOURCE)
+    target_compile_definitions(breeze6 PRIVATE _USE_MATH_DEFINES _BSD_SOURCE)
 endif()
 
 
 ########### install files ###############
-install(TARGETS breeze${QT_MAJOR_VERSION}  DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/styles/)
+install(TARGETS breeze6 DESTINATION ${KDE_INSTALL_QTPLUGINDIR}/styles/)
 install(FILES breeze.themerc  DESTINATION  ${KDE_INSTALL_DATADIR}/kstyle/themes)
 
 ########### subdirectories ###############
 
-if (QT_MAJOR_VERSION EQUAL "6" AND TARGET "KF6::KCMUtils")
+if(TARGET "KF6::KCMUtils")
     add_subdirectory(config)
 endif()
