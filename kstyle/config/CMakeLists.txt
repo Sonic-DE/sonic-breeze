@@ -35,12 +35,7 @@ target_link_libraries(breezestyleconfig
         KF6::ConfigWidgets
         KF6::I18n
 )
-if(QT_MAJOR_VERSION STREQUAL "6")
-    target_link_libraries(breezestyleconfig
-        PUBLIC
-    KF6::KCMUtils
-)
-endif()
+target_link_libraries(breezestyleconfig PUBLIC KF6::KCMUtils)
 kcmutils_generate_desktop_file(breezestyleconfig)
 
 set(breeze_settings_SOURCES main.cpp)
