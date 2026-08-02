@@ -31,7 +31,7 @@ list(APPEND Breeze_TARGETS
 add_custom_command(
     OUTPUT ${Breeze-Dark_TARGETS}
     DEPENDS ${SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/build_theme.sh
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build_theme.sh -c BreezeDark -t "${PROJECT_BINARY_DIR}/Breeze-Dark" -r "${KDE_INSTALL_FULL_DATADIR}/color-schemes"
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build_theme.sh -c BreezeDark -t "${PROJECT_BINARY_DIR}/Breeze-Dark" -r "${PROJECT_SOURCE_DIR}/colors"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 add_custom_target(Breeze-Dark ALL DEPENDS ${Breeze-Dark_TARGETS})
@@ -39,7 +39,7 @@ add_custom_target(Breeze-Dark ALL DEPENDS ${Breeze-Dark_TARGETS})
 add_custom_command(
     OUTPUT ${Breeze_TARGETS}
     DEPENDS ${SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/build_theme.sh
-    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build_theme.sh -c BreezeLight -t "${PROJECT_BINARY_DIR}/Breeze" -r "${KDE_INSTALL_FULL_DATADIR}/color-schemes"
+    COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build_theme.sh -c BreezeLight -t "${PROJECT_BINARY_DIR}/Breeze" -r "${PROJECT_SOURCE_DIR}/colors"
     COMMAND cp gtk-dark-3.0.css "${PROJECT_BINARY_DIR}/Breeze/gtk-3.0/gtk-dark.css"
     COMMAND cp gtk-dark-4.0.css "${PROJECT_BINARY_DIR}/Breeze/gtk-4.0/gtk-dark.css"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
