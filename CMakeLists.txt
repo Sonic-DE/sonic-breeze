@@ -11,7 +11,7 @@ include(WriteBasicConfigVersionFile)
 include(FeatureSummary)
 
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_SOURCE_DIR}/gtk/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,10 +30,6 @@ include(KDEClangFormat)
 include(KDEGitCommitHooks)
 
 include(GtkUpdateIconCache)
-
-find_package(Sass REQUIRED)
-find_package(PythonCairo REQUIRED)
-
 
 option(BUILD_CURSOR "Build Breeze Cursor" ON)
 option(BUILD_WITH_QTQUICK "Build with Qt Quick features enabled" ON)
@@ -91,7 +87,6 @@ add_subdirectory(libbreezecommon)
 add_subdirectory(misc)
 add_subdirectory(desktoptheme)
 add_subdirectory(look-and-feel)
-add_subdirectory(gtk)
 
 if(WITH_DECORATIONS)
     find_package(KDecoration3 REQUIRED)
