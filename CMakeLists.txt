@@ -115,6 +115,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SonicBreezeConfig.cmake"
 unset(QUERY_EXECUTABLE CACHE)
 
 add_subdirectory(colors)
+add_subdirectory(icons)
 if(BUILD_CURSOR)
     add_subdirectory(cursors)
 endif()
