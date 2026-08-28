@@ -6,11 +6,15 @@ install(FILES breeze/index.theme
 install(FILES breeze-dark/index.theme
         DESTINATION "${BREEZE_DARK_ICON_INSTALL_DIR}")
 
-# Breeze is an overlay on Silver. Only install icons that are not available
-# from the inherited Silver themes; shared and Sonic-branded icons stay in one
-# place and are resolved through icon-theme inheritance.
-install(DIRECTORY breeze/places breeze/preferences
-        DESTINATION "${BREEZE_ICON_INSTALL_DIR}")
+# Breeze provides a full pre-sonic icon set. Sonic branding icons (start-here-sonicde*,
+# folder-activities*) are deliberately excluded so they resolve through
+# Inherits=silver and apply to all child themes.
+install(DIRECTORY breeze/
+        DESTINATION "${BREEZE_ICON_INSTALL_DIR}"
+        PATTERN "index.theme" EXCLUDE)
+install(DIRECTORY breeze/
+        DESTINATION "${BREEZE_DARK_ICON_INSTALL_DIR}"
+        PATTERN "index.theme" EXCLUDE)
 
 gtk_update_icon_cache("${BREEZE_ICON_INSTALL_DIR}")
 gtk_update_icon_cache("${BREEZE_DARK_ICON_INSTALL_DIR}")
