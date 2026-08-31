@@ -8,13 +8,13 @@ ColorScheme=BreezeDark
 Theme=breeze-dark
 
 [plasmarc][Theme]
-name=default
+name=breeze-dark
 
 [Wallpaper]
 Image=Next
 
 [kcminputrc][Mouse]
-cursorTheme=breeze_cursors
+cursorTheme=Breeze
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.breeze
