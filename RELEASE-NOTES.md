@@ -2,7 +2,7 @@
 
 Sonic Breeze keeps the classic Breeze look available in SonicDE as an optional theme, with its window style, colors, icons and desktop layouts.
 
-## Unreleased
+## 6.8.2 (2026-11-10)
 
 - Breeze desktop layouts now carry SonicDE's own name, so they apply correctly to the SonicDE desktop.
 
