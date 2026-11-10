@@ -2,6 +2,10 @@
 
 Sonic Breeze keeps the classic Breeze look available in SonicDE as an optional theme, with its window style, colors, icons and desktop layouts.
 
+## Unreleased
+
+- The Breeze Dark global theme now uses the Breeze mouse cursors, instead of having them replaced by Silver's with a "theme components were replaced" message.
+
 ## 6.8.2 (2026-11-10)
 
 - Breeze desktop layouts now carry SonicDE's own name, so they apply correctly to the SonicDE desktop.

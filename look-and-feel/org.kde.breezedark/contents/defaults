@@ -14,7 +14,7 @@ name=breeze-dark
 Image=Next
 
 [kcminputrc][Mouse]
-cursorTheme=Breeze
+cursorTheme=breeze_cursors
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.breeze
