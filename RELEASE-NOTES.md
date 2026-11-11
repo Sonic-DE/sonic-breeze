@@ -5,6 +5,7 @@ Sonic Breeze keeps the classic Breeze look available in SonicDE as an optional t
 ## Unreleased
 
 - The Breeze Dark global theme now uses the Breeze mouse cursors, instead of having them replaced by Silver's with a "theme components were replaced" message.
+- In the Breeze desktop theme, the top and bottom bars of pop-ups, such as the application launcher's, are now as see-through as the rest of the pop-up.
 
 ## 6.8.2 (2026-11-10)
 
