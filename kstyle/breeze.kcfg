@@ -177,11 +177,6 @@
       <default>false</default>
     </entry>
 
-    <!-- transparency -->
-    <entry name="MenuOpacity" type="Int">
-        <default>100</default>
-    </entry>
-
   </group>
 
 </kcfg>

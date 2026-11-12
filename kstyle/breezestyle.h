@@ -508,6 +508,9 @@ private:
     using IconCache = QHash<StandardPixmap, QIcon>;
     IconCache _iconCache;
 
+    //* menu opacity, 0–100, shared by every style (KToolsArea::menuOpacity())
+    int _menuOpacity = 100;
+
     //* pointer to primitive specialized function
     using StylePrimitive = std::function<bool(const Style &, const QStyleOption *, QPainter *, const QWidget *)>;
     StylePrimitive _frameFocusPrimitive;

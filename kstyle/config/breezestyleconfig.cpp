@@ -45,7 +45,6 @@ StyleConfig::StyleConfig(QWidget *parent)
     connect(_scrollBarAddLineButtons, SIGNAL(currentIndexChanged(int)), SLOT(updateChanged()));
     connect(_scrollBarSubLineButtons, SIGNAL(currentIndexChanged(int)), SLOT(updateChanged()));
     connect(_windowDragMode, SIGNAL(currentIndexChanged(int)), SLOT(updateChanged()));
-    connect(_menuOpacity, &QAbstractSlider::valueChanged, this, &StyleConfig::updateChanged);
 }
 
 //__________________________________________________________________
@@ -63,7 +62,6 @@ void StyleConfig::save()
     StyleConfigData::setScrollBarAddLineButtons(_scrollBarAddLineButtons->currentIndex());
     StyleConfigData::setScrollBarSubLineButtons(_scrollBarSubLineButtons->currentIndex());
     StyleConfigData::setWindowDragMode(_windowDragMode->currentIndex());
-    StyleConfigData::setMenuOpacity(_menuOpacity->value());
 
     StyleConfigData::self()->save();
 
@@ -121,8 +119,6 @@ void StyleConfig::updateChanged()
         modified = true;
     } else if (_windowDragMode->currentIndex() != StyleConfigData::windowDragMode()) {
         modified = true;
-    } else if (_menuOpacity->value() != StyleConfigData::menuOpacity()) {
-        modified = true;
     }
     emit changed(modified);
 }
@@ -142,7 +138,6 @@ void StyleConfig::load()
     _scrollBarAddLineButtons->setCurrentIndex(StyleConfigData::scrollBarAddLineButtons());
     _scrollBarSubLineButtons->setCurrentIndex(StyleConfigData::scrollBarSubLineButtons());
     _windowDragMode->setCurrentIndex(StyleConfigData::windowDragMode());
-    _menuOpacity->setValue(StyleConfigData::menuOpacity());
 }
 
 }
